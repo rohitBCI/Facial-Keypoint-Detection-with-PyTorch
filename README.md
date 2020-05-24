@@ -6,10 +6,10 @@ This repository contains project files for Computer Vision, Nanodegree  via [Uda
 
 ## Examples
 + **Detect all faces using Haar Cascade Classifiers using OpenCV**
-<p align="center"> <img src="images/haar.png" align="middle" alt="drawing" width="400px"> </p> 
+<p align="center"> <img src="images/haar.PNG" align="middle" alt="drawing" width="400px"> </p> 
 
 + **Detect facial keypoint with a Convolutional Neural Network**
-<p align="center"> <img src="images/key_points.png" align="middle" alt="drawing" width="300px"> </p>
+<p align="center"> <img src="images/key_points.PNG" align="middle" alt="drawing" width="300px"> </p>
 
 Here we're defining and training a convolutional neural network to perform facial keypoint detection, and using computer vision techniques to transform images of faces. The first step in any challenge like this will be to load and visualize the data you'll be working with. 
 
