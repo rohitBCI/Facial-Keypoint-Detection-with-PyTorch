@@ -1,4 +1,4 @@
-#importing libraries
+# importing libraries
 import glob
 import os
 import numpy as np
@@ -10,27 +10,27 @@ import cv2
 import torch
 from torchvision import transforms, utils
 
-#display image with keypoints
+# display image with keypoints
 def show_keypoints(image, key_pts):
     plt.imshow(image)
     plt.scatter(key_pts[:, 0], key_pts[:, 1], s = 20, marker = '.', c = 'm')
 
 class FacialDataset(Dataset):
     def __init__(self, csv_file, root_dir, transform = None):
-        #args: path to csv file with keypoint data, directory with images, transform to be applied
+        # args: path to csv file with keypoint data, directory with images, transform to be applied
         self.key_pts_frame = pd.read_csv(csv_file)
         self.root_dir = root_dir
         self.transform = transform
 
     def __len__(self):
-        #return size of dataset
+        # return size of dataset
         return len(self.key_pts_frame.shape)
 
     def __getitem__(self, idx):
         image_name = os.path.join(self.root_dir, self.key_pts_frame.iloc[idx, 0])
         image = mpimg.imread(image_name)
 
-        #removing alpha color channel if present
+        # removing alpha color channel if present
         if image.shape[2] == 4:
             image = image[:, :, 0:3]
 
@@ -39,7 +39,7 @@ class FacialDataset(Dataset):
 
         sample = {'image': image, 'keypoints': key_pts}
         
-        #apply transform
+        # apply transform
         if self.transform:
             sample = self.transform(sample)
 
@@ -48,13 +48,13 @@ class FacialDataset(Dataset):
 
 
 class Normalize(object):
-#Convert a color image to grayscale and normalize the color range to [0,1]
+# Convert a color image to grayscale and normalize the color range to [0,1]
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
         image_copy = np.copy(image)
         key_pts_copy = np.copy(key_pts)
 
-        #convert image to grayscale
+        # convert image to grayscale
         image_copy = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
         # scale color range from [0, 255] to [0, 1]
@@ -68,8 +68,8 @@ class Normalize(object):
 
 
 class Rescale(object):
-#Rescale the image in a sample to a given size
-#args: if int, smaller edge matched keeping aspect ratio same
+# Rescale the image in a sample to a given size
+# args: if int, smaller edge matched keeping aspect ratio same
 #    : if tuple, ouput size matched to it
     def __init__(self, output_size):
         assert isinstance(output_size, (int, tuple))
@@ -89,14 +89,14 @@ class Rescale(object):
         new_h, new_w = int(new_h), int(new_w)
         img = cv2.resize(image, (new_w, new_h))
 
-        #scale keypoints
+        # scale keypoints
         key_pts = key_pts * [new_w / w, new_h / h]
         return {'image': img, 'keypoints': key_pts}
 
 
 class RandomCrop(object):
-#Randomly crop images in a sample
-#args: if tuple, output size matched to it
+# Randomly crop images in a sample
+# args: if tuple, output size matched to it
 #    : if int, square crop made
     def __init__(self, output_size):
         assert isinstance(output_size, (int, tuple))
@@ -122,7 +122,7 @@ class RandomCrop(object):
         return {'image': image, 'keypoints': key_pts}
 
 class ToTensor(object):
-#Convert ndarrays in sample to Tensors
+# Convert ndarrays in sample to Tensors
 
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
