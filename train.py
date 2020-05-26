@@ -1,4 +1,4 @@
-#importing libraries
+# importing libraries
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -25,7 +25,7 @@ batch_size = 20
 train_loader = DataLoader(transformed_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 
-#display image with predicted keypoints
+# display image with predicted keypoints
 def show_all_keypoints(image, predicted_key_pts, gt_pts=None):
     plt.imshow(image, cmap='gray')
     plt.scatter(predicted_key_pts[:, 0], predicted_key_pts[:, 1], s=20, marker='.', c='m')
@@ -35,7 +35,7 @@ def show_all_keypoints(image, predicted_key_pts, gt_pts=None):
 criterion = nn.SmoothL1Loss()
 optimizer = optim.Adam(net.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-08)
 
-#training
+# training
 def train_net(n_epochs):
     net.train()
     for epoch in range(n_epochs):
@@ -43,7 +43,7 @@ def train_net(n_epochs):
         for batch_i, data in enumerate(train_loader):
             images = data['image']
             key_pts = data['keypoints']
-            #flatten keypoints
+            # flatten keypoints
             key_pts = key_pts.view(key_pts.size(0), -1)
             # convert variables to floats for regression loss
             key_pts = key_pts.type(torch.FloatTensor)
