@@ -28,7 +28,7 @@ Facial keypoints (also called facial landmarks) are the small magenta dots shown
 
 1. Clone the repository, and navigate to the downloaded folder. This may take a minute or two to clone due to the included image data.
 	```
-	git clone https://github.com/nalbert9/Facial-Keypoint-Detection.git
+	git clone https://github.com/rohitvk1/Facial-Keypoint-Detection-with-PyTorch.git
 	```
 2. Create (and activate) a new Anaconda environment (Python 3.6).
 Download via [Anaconda](https://www.anaconda.com/distribution/)
